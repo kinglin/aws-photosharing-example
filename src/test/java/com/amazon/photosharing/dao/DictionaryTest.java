@@ -26,65 +26,65 @@ import java.util.Locale;
 
 public class DictionaryTest {
 
-    private static final String VALUE = "myText";
-    private static final String ID = "idKey";
+	private static final String VALUE = "myText";
+	private static final String ID = "idKey";
 
-    private void checkDictionary(Dictionary dictionary) {
-        Assert.assertEquals(dictionary.getId().getId(), ID);
-        Assert.assertEquals(dictionary.getId().getLocale(), Locale.GERMAN);
-        Assert.assertEquals(dictionary.getText(), VALUE);
-    }
+	private void checkDictionary(Dictionary dictionary) {
+		Assert.assertEquals(dictionary.getId().getId(), ID);
+		Assert.assertEquals(dictionary.getId().getLocale(), Locale.GERMAN);
+		Assert.assertEquals(dictionary.getText(), VALUE);
+	}
 
-    @Test
-    public void testCRUD() {
-        boolean error = false;
+	@Test
+	public void testCRUD() {
+		boolean error = false;
 
-        EntityManager _em;
+		EntityManager _em;
 
-        try {
-            _em = Persistence.createEntityManager();
+		try {
+			_em = Persistence.createEntityManager();
 
-            Dictionary dictionary = new Dictionary();
-            dictionary.setText(VALUE);
+			Dictionary dictionary = new Dictionary();
+			dictionary.setText(VALUE);
 
-            DictionaryPK pk = new DictionaryPK();
-            pk.setId(ID);
-            pk.setLocale(Locale.GERMAN);
-            dictionary.setId(pk);
+			DictionaryPK pk = new DictionaryPK();
+			pk.setId(ID);
+			pk.setLocale(Locale.GERMAN);
+			dictionary.setId(pk);
 
-            _em.getTransaction().begin();
-            _em.persist(dictionary);
-            _em.getTransaction().commit();
+			_em.getTransaction().begin();
+			_em.persist(dictionary);
+			_em.getTransaction().commit();
 
-            Query query = _em.createQuery("select d from Dictionary d where d.text='myText'");
-            Dictionary retDictionary = (Dictionary)query.getSingleResult();
+			Query query = _em.createQuery("select d from Dictionary d where d.text='myText'");
+			Dictionary retDictionary = (Dictionary) query.getSingleResult();
 
-            checkDictionary(retDictionary);
+			checkDictionary(retDictionary);
 
-            _em.getTransaction().begin();
-            _em.remove(retDictionary);
-            _em.getTransaction().commit();
-        }
+			_em.getTransaction().begin();
+			_em.remove(retDictionary);
+			_em.getTransaction().commit();
+		}
 
-        catch (Exception exc) {
-            error = true;
-            exc.printStackTrace();
-        }
+		catch (Exception exc) {
+			error = true;
+			exc.printStackTrace();
+		}
 
-        Assert.assertFalse(error);
+		Assert.assertFalse(error);
 
-        error = false;
-        try {
-            _em = Persistence.createEntityManager();
+		error = false;
+		try {
+			_em = Persistence.createEntityManager();
 
-            Query query = _em.createQuery("select d from Dictionary d where d.text='myText'");
-            Dictionary retDictionary = (Dictionary)query.getSingleResult();
-        }
+			Query query = _em.createQuery("select d from Dictionary d where d.text='myText'");
+			Dictionary retDictionary = (Dictionary) query.getSingleResult();
+		}
 
-        catch (javax.persistence.NoResultException e) {
-            error = true;
-        }
+		catch (javax.persistence.NoResultException e) {
+			error = true;
+		}
 
-        Assert.assertTrue(error);
-    }
+		Assert.assertTrue(error);
+	}
 }

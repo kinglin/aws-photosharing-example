@@ -40,14 +40,14 @@
 
 	<Resource name="jdbc/PhotoSharingDB2" auth="Container"  factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 		type="javax.sql.DataSource" maxTotal="4" maxIdle="2" maxWaitMillis="10000" removeAbandoned="true" removeAbandonedTimeout="10" logAbandoned="true"
-		username="photosharing" password="password" driverClassName="com.mysql.jdbc.Driver"
+		username="root" password="12345678" driverClassName="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/photosharing" />
 
 	<Realm className="org.apache.catalina.realm.LockOutRealm">
 
 		<Realm className="org.apache.catalina.realm.JDBCRealm"
 			driverName="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/photosharing"
-			connectionName="photosharing" connectionPassword="password"
+			connectionName="root" connectionPassword="12345678"
 			userTable="user" userNameCol="user_id" userCredCol="password"
 			userRoleTable="role_mappings" roleNameCol="role" />
 	</Realm>

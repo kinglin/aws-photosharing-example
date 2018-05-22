@@ -20,34 +20,44 @@ import java.io.Serializable;
 import java.util.regex.Pattern;
 
 public abstract class Property implements Serializable {
-	
+
 	private static final long serialVersionUID = -5950600498082715620L;
-	
+
 	private String[] _propertyPath;
-	
+
 	protected Property(String p_property) {
 		setProperty(p_property);
 	}
-	
-	public String getProperty() {return join(_propertyPath);}
-	public void setProperty(String property) {this._propertyPath = split(property);}
-	
-	public String[] getPropertyPath() {return _propertyPath;}
-	public void setPropertyPath(String[] p_path) {this._propertyPath = p_path;}
-	
+
+	public String getProperty() {
+		return join(_propertyPath);
+	}
+
+	public void setProperty(String property) {
+		this._propertyPath = split(property);
+	}
+
+	public String[] getPropertyPath() {
+		return _propertyPath;
+	}
+
+	public void setPropertyPath(String[] p_path) {
+		this._propertyPath = p_path;
+	}
+
 	private String[] split(String p_path) {
 		if (p_path.contains("."))
 			return p_path.split(Pattern.quote("."));
 		else
-			return new String[] {p_path};
+			return new String[] { p_path };
 	}
-	
+
 	private String join(String[] p_path) {
 		StringBuffer result = new StringBuffer();
 		for (String string : p_path) {
 			result.append(string);
 			result.append('.');
 		}
-		return result.substring(0, result.length()-1);
+		return result.substring(0, result.length() - 1);
 	}
 }
